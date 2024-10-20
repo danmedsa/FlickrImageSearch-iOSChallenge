@@ -21,7 +21,7 @@ struct MainFeedView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem()], spacing: 16) {
                     ForEach(imageList, id: \.self) { imageLink in
-                        Text(imageLink)
+                        GridImageView(image: .example)
                     }
                 }
             }
