@@ -12,7 +12,12 @@ struct GridImageView: View {
     
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: image.link))
+            AsyncImage(url: URL(string: image.link)) { image in
+                image.resizable()
+                    .aspectRatio(contentMode: .fit)
+            } placeholder: {
+                ProgressView()
+            }
             Text("More Details")
                 .foregroundStyle(.blue)
         }

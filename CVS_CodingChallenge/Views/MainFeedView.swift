@@ -16,9 +16,12 @@ struct MainFeedView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem()], spacing: 16) {
                     ForEach(feed, id: \.self) { image in
-                        GridImageView(image: image)
+                        NavigationLink(destination: ImageDetailView(image: image)) {
+                            GridImageView(image: image)
+                        }
                     }
                 }
+                .padding(.horizontal)
             }
         }
         .searchable(text: $searchText, prompt: "Search for Images")
