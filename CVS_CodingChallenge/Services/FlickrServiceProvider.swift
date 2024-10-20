@@ -12,7 +12,7 @@ protocol FlickrServiceProviding {
 }
 
 struct FlickrServiceProvider: FlickrServiceProviding {
-    private var flickrFeedURL: String { "https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1&tags=" }
+    private var flickrFeedURL: String { "https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1" }
     private var serviceHandler: ServiceHandling
 
     init(session: URLSessionAPI =  URLSession.shared) {
@@ -20,8 +20,13 @@ struct FlickrServiceProvider: FlickrServiceProviding {
     }
 
     func fetchFeed(for search: String) async -> [FlickrImage] {
-        guard let url = URL(string: "\(flickrFeedURL)\(search)"),
-              let (response, _) = try? await serviceHandler.makeServiceCall(for: url, type: FlickrSearchResponse.self) else { return [] }
+        guard var url = URL(string: "\(flickrFeedURL)") else { return [] }
+        let formatQueryItem = URLQueryItem(name: "format", value: "json")
+        let jsonCallbackQueryItem = URLQueryItem(name: "nojsoncallback", value: "1")
+        let tagQueryItem = URLQueryItem(name: "tags", value: search)
+        url.append(queryItems: [formatQueryItem, jsonCallbackQueryItem, tagQueryItem])
+        print(url.absoluteString)
+        guard let (response, _) = try? await serviceHandler.makeServiceCall(for: url, type: FlickrSearchResponse.self) else { return [] }
 
         return response.items
     }
