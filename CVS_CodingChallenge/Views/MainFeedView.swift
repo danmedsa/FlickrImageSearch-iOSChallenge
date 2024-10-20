@@ -9,18 +9,19 @@ import SwiftUI
 
 struct MainFeedView: View {
     @State private var searchText = ""
-    let elements = (1...10).map { "Image \($0)" }
+    let feed = [FlickrImage.example]
+    var imageList: [String] { feed.map { $0.link } }
     
-    var searchResult: [String] {
-        return searchText.isEmpty ? [] : elements.filter { $0.contains(searchText) }
+    var searchResult: [FlickrImage] {
+        return searchText.isEmpty ? [] : feed
     }
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: [GridItem()], spacing: 16) {
-                    ForEach(elements, id: \.self) { feedItem in
-                        Text(feedItem)
+                    ForEach(imageList, id: \.self) { imageLink in
+                        Text(imageLink)
                     }
                 }
             }
