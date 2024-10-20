@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct MainFeedView: View {
+    @State private var searchText = ""
+    let elements = (1...10).map { "Image \($0)" }
+    
+    var searchResult: [String] {
+        return searchText.isEmpty ? [] : elements.filter { $0.contains(searchText) }
+    }
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            ScrollView {
+                LazyVGrid(columns: [GridItem()], spacing: 16) {
+                    ForEach(elements, id: \.self) { feedItem in
+                        Text(feedItem)
+                    }
+                }
+            }
         }
-        .padding()
+        .searchable(text: $searchText, prompt: "Search for Images")
+
     }
 }
 
