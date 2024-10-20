@@ -32,16 +32,10 @@ private extension ImageDetailViewUITests {
         let item = app.staticTexts["More Details"].firstMatch
         item.tap()
         
-        let authorText = app.staticTexts["By: nobody@flickr.com (\"Didi Fu\")"]
-        let takenText = app.staticTexts["Taken on: Oct 11, 2015 at 2:02 AM"]
-        
-        let descriptionPredicate = NSPredicate(format: "label contains %@", "posted a photo")
+        let descriptionPredicate = NSPredicate(format: "label contains %@", "Displaying the image Fall Color by:nobody@flickr.com (\"Didi Fu\"), Taken on: Oct 11, 2015 at 2:02 AM with description: Didi Fu posted a photo:")
         let descriptionText = app.staticTexts.containing(descriptionPredicate).firstMatch
         let backButton = app.buttons["Back"]
-        
-        XCTAssertTrue(authorText.exists)
-        XCTAssertTrue(takenText.exists)
-        XCTAssertTrue(descriptionText.exists)
+                XCTAssertTrue(descriptionText.exists)
         XCTAssertTrue(backButton.exists)
         
         backButton.tap()
