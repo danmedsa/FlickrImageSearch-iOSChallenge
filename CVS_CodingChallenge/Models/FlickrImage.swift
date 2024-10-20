@@ -5,7 +5,7 @@
 //  Created by Daniel Medina Sada on 10/19/24.
 //
 
-struct FlickrImage: Codable {
+struct FlickrImage: Hashable, Codable {
     var link: String
     var title: String
     var description: String

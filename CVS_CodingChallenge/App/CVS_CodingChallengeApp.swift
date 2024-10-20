@@ -11,7 +11,7 @@ import SwiftUI
 struct CVS_CodingChallengeApp: App {
     var body: some Scene {
         WindowGroup {
-            MainFeedView()
+            MainFeedView(viewModel: .init())
         }
     }
 }

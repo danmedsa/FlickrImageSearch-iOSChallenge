@@ -8,20 +8,15 @@
 import SwiftUI
 
 struct MainFeedView: View {
+    let viewModel: MainFeedViewModel
     @State private var searchText = ""
-    let feed = [FlickrImage.example]
-    var imageList: [String] { feed.map { $0.link } }
-    
-    var searchResult: [FlickrImage] {
-        return searchText.isEmpty ? [] : feed
-    }
-    
+    private var feed: [FlickrImage] { viewModel.getImageFeed(for: searchText) }
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: [GridItem()], spacing: 16) {
-                    ForEach(imageList, id: \.self) { imageLink in
-                        GridImageView(image: .example)
+                    ForEach(feed, id: \.self) { image in
+                        GridImageView(image: image)
                     }
                 }
             }
@@ -32,5 +27,5 @@ struct MainFeedView: View {
 }
 
 #Preview {
-    MainFeedView()
+    MainFeedView(viewModel: .init())
 }
