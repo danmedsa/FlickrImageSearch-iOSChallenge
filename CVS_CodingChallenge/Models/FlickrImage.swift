@@ -24,7 +24,7 @@ struct FlickrImage: Hashable, Codable {
     static var example: FlickrImage {
         FlickrImage(link: "https://live.staticflickr.com/65535/54077728957_d407c00486_m.jpg",
                     title: "06 African Crested Porcupine",
-                    description: "description",
+                    description: "description width=\"240\" height=\"160\"",
                     author: "nobody@flickr.com (\"megatti\")",
                     date_taken: "2023-08-26T09:45:56-08:00")
     }

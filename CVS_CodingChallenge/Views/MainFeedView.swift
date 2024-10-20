@@ -11,9 +11,12 @@ struct MainFeedView: View {
     @State var viewModel: MainFeedViewModel
     @State var searchText = ""
     @State var isLoading = false
+    
     var body: some View {
         NavigationStack {
-            if !isLoading {
+            if !searchText.isEmpty && viewModel.noResultSearch {
+                Text("No Images Found")
+            } else if !isLoading {
                 ScrollView {
                     LazyVGrid(columns: [GridItem()], spacing: 16) {
                         ForEach(viewModel.feed, id: \.self) { image in
@@ -29,10 +32,11 @@ struct MainFeedView: View {
             }
         }
         .searchable(text: $searchText, prompt: "Search for Images")
-        .onChange(of: searchText) { _, search in
-            Task.init {
+        .onChange(of: searchText) { oldValue, newValue in
+            guard oldValue != newValue else { return }
+            Task {
                 isLoading = true
-                await viewModel.updateImageFeed(for: search)
+                await viewModel.updateImageFeed(for: newValue)
                 isLoading = false
             }
         }

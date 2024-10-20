@@ -10,8 +10,10 @@ import SwiftUICore
 
 class MainFeedViewModel {
     
-    var serviceProvider: FlickrServiceProviding
-    var feed = [FlickrImage]()
+    private var serviceProvider: FlickrServiceProviding
+    private(set) var feed = [FlickrImage]()
+    
+    var noResultSearch: Bool { feed.isEmpty }
     
     init(session: URLSessionAPI = URLSession.shared) {
         self.serviceProvider = FlickrServiceProvider(session: session)
